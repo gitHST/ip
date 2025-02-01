@@ -1,10 +1,9 @@
 import java.util.Random;
 import java.util.Scanner;
-import java.util.HashMap;
 
 public class Duchess {
     private final ListManager listManager;
-    private boolean wantsToPlaySnake = false;
+    private boolean wantsToPlayCN4 = false;
 
     public Duchess() {
         listManager = new ListManager();
@@ -27,8 +26,9 @@ public class Duchess {
                 return listManager.toggleItem(parts[1].trim(), parts[2].trim(), parts[3].trim().equals("tick"));
             }
         }
-        if (userInput.equalsIgnoreCase("snake")) {
-            return "You want to play snake? alright! Let's play!";
+        if (userInput.equalsIgnoreCase("connect")) {
+            wantsToPlayCN4 = true;
+            return "You want to play connect four? The game created by Howard Wexler, and first sold under the Connect Four trademark by Milton Bradley in February 1974?\nAlright! Let's play!";
         }
         return getRandomInvalidResponse();
     }
@@ -78,7 +78,7 @@ public class Duchess {
                         Here are some commands you can try:
                           -h: Display help
                           quit: Exit the chatbot
-                          snake: Play a game of snake
+                          connect: Play a game of connect 4
                           list {name}: Start a list of name {name} if it doesn't exist, or display the list if it does
                           list {name} {item}: Add an item to an existing list
                           list {name} {item} tick: Tick an item in an existing list
@@ -88,9 +88,10 @@ public class Duchess {
             }
 
             System.out.println("Duchess: " + duchess.getBotResponse(userInput));
-            if (duchess.wantsToPlaySnake) {
-                boolean win = new SnakeGame().playGame();
-                duchess.wantsToPlaySnake = false;
+            if (duchess.wantsToPlayCN4) {
+                boolean won = new ConnectFourGame().playGame();
+                duchess.wantsToPlayCN4 = false;
+                System.out.println("Duchess: You " + (won ? "won! well played sire..." : "lost! sucks to suck..."));
             }
         }
 

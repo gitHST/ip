@@ -31,5 +31,31 @@ public class StringList {
         return items;
     }
 
+    @Override
+    public String toString() {
+        if (items.isEmpty()) {
+            return "The list is empty.";
+        }
+        int longestItemLength = items
+                .stream()
+                .mapToInt(item -> item
+                        .toString()
+                        .length())
+                .max()
+                .orElse(0);
+        StringBuilder sb = new StringBuilder("\nList contents:\n");
+        for (int i = 0; i < items.size(); i++) {
+            ListItem item = items.get(i);
+            sb
+                    .append(i + 1)
+                    .append(". ")
+                    .append(item)
+                    .append(" ".repeat(Math.max(0, (longestItemLength - item.toString().length()))))
+                    .append(" ")
+                    .append(item.isTicked() ? "[x]" : "[ ]")
+                    .append("\n");
+        }
+        return sb.toString();
+    }
 
 }

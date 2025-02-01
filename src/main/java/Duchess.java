@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 public class Duchess {
     private final ListManager listManager;
+    private boolean wantsToPlaySnake = false;
 
     public Duchess() {
         listManager = new ListManager();
@@ -25,6 +26,9 @@ public class Duchess {
             } else if (parts.length == 4) {
                 return listManager.toggleItem(parts[1].trim(), parts[2].trim(), parts[3].trim().equals("tick"));
             }
+        }
+        if (userInput.equalsIgnoreCase("snake")) {
+            return "You want to play snake? alright! Let's play!";
         }
         return getRandomInvalidResponse();
     }
@@ -74,6 +78,7 @@ public class Duchess {
                         Here are some commands you can try:
                           -h: Display help
                           quit: Exit the chatbot
+                          snake: Play a game of snake
                           list {name}: Start a list of name {name} if it doesn't exist, or display the list if it does
                           list {name} {item}: Add an item to an existing list
                           list {name} {item} tick: Tick an item in an existing list
@@ -83,6 +88,10 @@ public class Duchess {
             }
 
             System.out.println("Duchess: " + duchess.getBotResponse(userInput));
+            if (duchess.wantsToPlaySnake) {
+                boolean win = new SnakeGame().playGame();
+                duchess.wantsToPlaySnake = false;
+            }
         }
 
         scanner.close();

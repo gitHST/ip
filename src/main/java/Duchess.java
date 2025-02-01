@@ -6,6 +6,7 @@ import static java.lang.Thread.sleep;
 public class Duchess {
     private final ListManager listManager;
     private boolean wantsToPlayCN4 = false;
+    private static final boolean isUsingTerminal = System.console() != null;
 
     public Duchess() {
         listManager = new ListManager();
@@ -29,8 +30,12 @@ public class Duchess {
             }
         }
         if (userInput.equalsIgnoreCase("connect")) {
-            wantsToPlayCN4 = true;
-            return "You want to play connect four? The game created by Howard Wexler, and first sold under the Connect Four trademark by Milton Bradley in February 1974?\nOkay!\n\n";
+            if (isUsingTerminal) {
+                wantsToPlayCN4 = true;
+                return "You want to play connect four? The game created by Howard Wexler, and first sold under the Connect Four trademark by Milton Bradley in February 1974?\nOkay!\n\n";
+            } else {
+                return "I'm sorry dear, we simply can't play connect four in this environment! :( Please be a doll and run me in a terminal to play connect four.";
+            }
         }
         return getRandomInvalidResponse();
     }
@@ -59,7 +64,7 @@ public class Duchess {
         for (int i = 0; i < 50 ; i++) {
             System.out.println();
         }
-        if (System.console() == null) {
+        if (!isUsingTerminal) {
             System.out.println("It seems you are running this program in an IDE, Please run this program in a terminal (cmd, powershell) in order to enjoy the nice animations I created\nINSTRUCTIONS: Open directory \"out/production/ip\" in a terminal and type \"java Duchess\"\n");
             System.out.println("If you continue to run here, it will function just fine but look far, far worse.\nPress enter to continue and accept the inferior experience of IDE printing limitations...");
             scanner.nextLine();

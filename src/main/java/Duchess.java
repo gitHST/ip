@@ -30,7 +30,7 @@ public class Duchess {
         }
         if (userInput.equalsIgnoreCase("connect")) {
             wantsToPlayCN4 = true;
-            return "You want to play connect four? The game created by Howard Wexler, and first sold under the Connect Four trademark by Milton Bradley in February 1974?\nOkay!";
+            return "You want to play connect four? The game created by Howard Wexler, and first sold under the Connect Four trademark by Milton Bradley in February 1974?\nOkay!\n\n";
         }
         return getRandomInvalidResponse();
     }
@@ -56,22 +56,33 @@ public class Duchess {
 
         Scanner scanner = new Scanner(System.in);
         String userInput;
-
-        String logo = """
-                 ____              _ 
-                |  _ \\ _   _  ____| |_    ___  ___  ___
-                | | | | | | |/ ___|  _ \\ / _ \\/ __|/ __|
-                | |_| | |_| | |___| | | |  __/\\__ \\\\__ \\
-                |____/ \\__,_|\\____|_| |_|\\___||___/|___/
-                """;
         for (int i = 0; i < 50 ; i++) {
             System.out.println();
         }
-        Printer.PrintNicely(
-                "NOTICE: RUN IN OS TERMINAL (cmd, powershell) FOR SMOOTHEST EXPERIENCE. I PROMISE ITS WAYYY COOLER!!!!\nOpen  out/production/ip  and run  java Duchess\n\nHello from\n"
-                        + logo
-                        + "\nHow may I serve you today?\n  ~Type -h for help~"
-        , 3);
+        if (System.console() == null) {
+            System.out.println("It seems you are running this program in an IDE, Please run this program in a terminal (cmd, powershell) in order to enjoy the nice animations I created\nINSTRUCTIONS: Open directory \"out/production/ip\" in a terminal and type \"java Duchess\"\n");
+            System.out.println("If you continue to run here, it will function just fine but look far, far worse.\nPress enter to continue and accept the inferior experience of IDE printing limitations...");
+            scanner.nextLine();
+            System.out.println("...Really? Just know you hurt my feelings going forwards :( It would mean the world to me and will only take a second!... [Enter again to continue anyway]");
+            scanner.nextLine();
+        }
+
+        String logo = """
+                 ____              _                         
+                |  _ \\ _   _  ____| |_    ___  ___  ___      
+                | | | | | | |/ ___|  _ \\ / _ \\/ __|/ __|     
+                | |_| | |_| | |___| | | |  __/\\__ \\\\__ \\     
+                |____/ \\__,_|\\____|_| |_|\\___||___/|___/     
+                """;
+        System.out.print("\033[" + (logo.split("\n").length + 1) + "B");
+        System.out.print("\033[" + (logo.split("\n").length + 1) + "A");
+
+        Printer.printNicely("Greetings from the almighty:", 0.3);
+        sleep(300);
+
+
+        Printer.printLogo(5, logo, 20);
+        Printer.printNicely("\nHow may I serve you today?\n  ~Type -h for help~\n", 3);
 
         Duchess duchess = new Duchess();
 
@@ -80,10 +91,10 @@ public class Duchess {
             userInput = scanner.nextLine();
 
             if (userInput.equalsIgnoreCase("quit")) {
-                Printer.PrintNicely("Goodbye! It was nice chatting.");
+                Printer.printNicely("Goodbye! It was nice chatting.");
                 break;
             } else if (userInput.equalsIgnoreCase("-h")) {
-                Printer.PrintNicely(""" 
+                Printer.printNicely(""" 
                         Here are some commands you can try:
                           -h: Display help
                           quit: Exit the chatbot
@@ -92,31 +103,23 @@ public class Duchess {
                           list {name} {item}: Add an item to an existing list
                           list {name} {item} tick: Tick an item in an existing list
                           list {name} {item} untick: Untick an item in an existing list
-                        """);
+                        """, 1.5);
                 continue;
             }
 
-            Printer.PrintNicely("1");
-            Printer.PrintNicely("11111");
-            Printer.PrintNicely("1111111111");
-            Printer.PrintNicely("111111111111111");
-            Printer.PrintNicely("11111111111111111111");
-            Printer.PrintNicely("111111111111111111111111111");
-            Printer.PrintNicely("111111111111111111111111111111111111111111111111");
-
-            Printer.PrintNicely("Duchess: " + duchess.getBotResponse(userInput));
+            Printer.printNicely("Duchess: " + duchess.getBotResponse(userInput));
 
 
 
             if (duchess.wantsToPlayCN4) {
-                Printer.PrintNicely("Loading.");
-                for (int i = 0; i < 10; i++) {
+                Printer.printNicely("Loading");
+                for (int i = 0; i < 6; i++) {
                     System.out.print(".");
                     sleep(500);
                 }
                 boolean won = new ConnectFourGame().playGame();
                 duchess.wantsToPlayCN4 = false;
-                Printer.PrintNicely("Duchess: You " + (won ? "won! well played sire..." : "lost! sucks to suck..."));
+                Printer.printNicely("Duchess: You " + (won ? "won! well played sire..." : "lost! sucks to suck..."));
             }
         }
 

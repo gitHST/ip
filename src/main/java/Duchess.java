@@ -1,6 +1,8 @@
 import java.util.Random;
 import java.util.Scanner;
 
+import static java.lang.Thread.sleep;
+
 public class Duchess {
     private final ListManager listManager;
     private boolean wantsToPlayCN4 = false;
@@ -28,7 +30,7 @@ public class Duchess {
         }
         if (userInput.equalsIgnoreCase("connect")) {
             wantsToPlayCN4 = true;
-            return "You want to play connect four? The game created by Howard Wexler, and first sold under the Connect Four trademark by Milton Bradley in February 1974?\nAlright! Let's play!";
+            return "You want to play connect four? The game created by Howard Wexler, and first sold under the Connect Four trademark by Milton Bradley in February 1974?\nOkay!";
         }
         return getRandomInvalidResponse();
     }
@@ -50,7 +52,7 @@ public class Duchess {
         return invalidCommandResponses[randomIndex] + "\n  ~Type -h for help~";
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         Scanner scanner = new Scanner(System.in);
         String userInput;
@@ -62,7 +64,14 @@ public class Duchess {
                 | |_| | |_| | |___| | | |  __/\\__ \\\\__ \\
                 |____/ \\__,_|\\____|_| |_|\\___||___/|___/
                 """;
-        System.out.println("\nHello from\n" + logo + "\nHow may I serve you today?\n  ~Type -h for help~");
+        for (int i = 0; i < 50 ; i++) {
+            System.out.println();
+        }
+        Printer.PrintNicely(
+                "NOTICE: RUN IN OS TERMINAL (cmd, powershell) FOR SMOOTHEST EXPERIENCE. I PROMISE ITS WAYYY COOLER!!!!\nOpen  out/production/ip  and run  java Duchess\n\nHello from\n"
+                        + logo
+                        + "\nHow may I serve you today?\n  ~Type -h for help~"
+        , 3);
 
         Duchess duchess = new Duchess();
 
@@ -71,10 +80,10 @@ public class Duchess {
             userInput = scanner.nextLine();
 
             if (userInput.equalsIgnoreCase("quit")) {
-                System.out.println("Goodbye! It was nice chatting.");
+                Printer.PrintNicely("Goodbye! It was nice chatting.");
                 break;
             } else if (userInput.equalsIgnoreCase("-h")) {
-                System.out.println(""" 
+                Printer.PrintNicely(""" 
                         Here are some commands you can try:
                           -h: Display help
                           quit: Exit the chatbot
@@ -87,11 +96,27 @@ public class Duchess {
                 continue;
             }
 
-            System.out.println("Duchess: " + duchess.getBotResponse(userInput));
+            Printer.PrintNicely("1");
+            Printer.PrintNicely("11111");
+            Printer.PrintNicely("1111111111");
+            Printer.PrintNicely("111111111111111");
+            Printer.PrintNicely("11111111111111111111");
+            Printer.PrintNicely("111111111111111111111111111");
+            Printer.PrintNicely("111111111111111111111111111111111111111111111111");
+
+            Printer.PrintNicely("Duchess: " + duchess.getBotResponse(userInput));
+
+
+
             if (duchess.wantsToPlayCN4) {
+                Printer.PrintNicely("Loading.");
+                for (int i = 0; i < 10; i++) {
+                    System.out.print(".");
+                    sleep(500);
+                }
                 boolean won = new ConnectFourGame().playGame();
                 duchess.wantsToPlayCN4 = false;
-                System.out.println("Duchess: You " + (won ? "won! well played sire..." : "lost! sucks to suck..."));
+                Printer.PrintNicely("Duchess: You " + (won ? "won! well played sire..." : "lost! sucks to suck..."));
             }
         }
 

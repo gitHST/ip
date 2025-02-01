@@ -3,54 +3,30 @@ import java.util.Scanner;
 import java.util.HashMap;
 
 public class Duchess {
-
-    private HashMap<String, StringList> lists;
+    private final ListManager listManager;
 
     public Duchess() {
-        lists = new HashMap<>();
-    }
-
-    public void addList(String name, StringList stringList) {
-        lists.put(name, stringList);
-    }
-
-    public String getListContent(String name) {
-        StringList list = lists.get(name);
-        if (list != null) {
-            return list.toString();
-        } else {
-            return "I’m afraid I have no list under that name, darling.";
-        }
+        listManager = new ListManager();
     }
 
     public String getBotResponse(String userInput) {
         if (userInput.toLowerCase().startsWith("list ")) {
-            String[] parts = userInput.split(" ", 3);
+            String[] parts = userInput.split(" ", 4);
 
             if (parts.length == 2) {
                 String name = parts[1].trim();
-                if (!lists.containsKey(name)) {
-                    addList(name, new StringList());
-                    return "A new list, by the name of '" + name + "' has been created.";
-                } else {
-                    return getListContent(name);
+                if (!listManager.getListContent(name).contains("no list")) {
+                    return listManager.getListContent(name);
                 }
+                listManager.addList(name);
+                return "A new list, by the name of '" + name + "' has been created.";
             } else if (parts.length == 3) {
-                String name = parts[1].trim();
-                String item = parts[2].trim();
-
-                if (lists.containsKey(name)) {
-                    lists.put(name, lists.get(name).addItem(item));
-                    return "Added '" + item + "' to list '" + name + "'.";
-                } else {
-                    return "I’m afraid I have no list under that name, darling.";
-                }
-            } else {
-                return "Please provide a valid command. Use 'list <name>' to view or create a list.";
+                return listManager.addItemToList(parts[1].trim(), parts[2].trim());
+            } else if (parts.length == 4) {
+                return listManager.toggleItem(parts[1].trim(), parts[2].trim(), parts[3].trim().equals("tick"));
             }
-        } else {
-            return getRandomInvalidResponse();
         }
+        return getRandomInvalidResponse();
     }
 
     private String getRandomInvalidResponse() {
@@ -98,8 +74,10 @@ public class Duchess {
                         Here are some commands you can try:
                           -h: Display help
                           quit: Exit the chatbot
-                          list {name}: Start a list of name {name}
+                          list {name}: Start a list of name {name} if it doesn't exist, or display the list if it does
                           list {name} {item}: Add an item to an existing list
+                          list {name} {item} tick: Tick an item in an existing list
+                          list {name} {item} untick: Untick an item in an existing list
                         """);
                 continue;
             }

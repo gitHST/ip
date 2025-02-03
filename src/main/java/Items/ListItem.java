@@ -1,4 +1,6 @@
-abstract class ListItem {
+package Items;
+
+public abstract class ListItem {
     protected String itemName;
     protected boolean ticked;
 

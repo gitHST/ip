@@ -1,3 +1,5 @@
+import Items.TextItem;
+
 import java.util.Random;
 import java.util.Scanner;
 

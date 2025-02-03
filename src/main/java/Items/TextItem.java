@@ -1,11 +1,13 @@
-class TextItem extends ListItem {
+package Items;
+
+public class TextItem extends ListItem {
     public TextItem(String itemText) {
         super(itemText);
     }
 
     @Override
     public String getItemType() {
-        return "TextItem";
+        return "Items.TextItem";
     }
 
     @Override

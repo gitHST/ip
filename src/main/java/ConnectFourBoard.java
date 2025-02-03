@@ -16,6 +16,43 @@ public class ConnectFourBoard {
         this.scale = 2;
     }
 
+    public boolean placePiece(int column, String piece) {
+        for (int i = rows - 1; i >= 0; i--) {
+            if (board[i][column] == ' ') {
+                board[i][column] = piece.charAt(0);
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+    public boolean checkWin(String piece) {
+        /*
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (board[i][j] == piece.charAt(0)) {
+                    if (checkDirection(i, j, 1, 0, piece) || checkDirection(i, j, 0, 1, piece) || checkDirection(i, j, 1, 1, piece) || checkDirection(i, j, 1, -1, piece)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+
+         */
+        return false;
+    }
+
+    public boolean checkDraw() {
+        for (int i = 0; i < cols; i++) {
+            if (board[0][i] == ' ') {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public String printBoard() {
         int scalex = (2 * scale) - 1;
         int scaley = (int) Math.floor((scale - 1) / 2.0) + 1;

@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class ConnectFourGame {
     private boolean gameEnded = false;
     private ConnectFourBoard board;
+    private ConnectFourAI ai;
     public boolean playGame() throws InterruptedException {
         System.out.println("\n".repeat(50));
         Printer.printNicely("""
@@ -19,6 +20,7 @@ public class ConnectFourGame {
         int[] boardSize = askBoardSize();
         board = new ConnectFourBoard(boardSize[0], boardSize[1]);
         Printer.printNicely(board.printBoard());
+        ai = new ConnectFourAI(1);
 
         while (!gameEnded) {
             playTurn();
@@ -63,9 +65,33 @@ public class ConnectFourGame {
             }
         }
         if (scale != -1) {
-            // Rescale the board
+            board.setScale(scale);
+            Printer.printNicely(board.printBoard());
         } else {
-            // Place the piece
+            if (!board.placePiece(Integer.parseInt(input), "@")) {
+                Printer.printNicely("You can't go there silly! Where do you really want to go?...\n[Hint, it's a number between 0 and " + (board.getCols() - 1) + "!!]");
+                scanner.nextLine();
+            } else {
+                // If the piece gets placed
+                Printer.printNicely(board.printBoard());
+                if (board.checkWin("@")) {
+                    Printer.printNicely("Congratulations! You won!");
+                    gameEnded = true;
+                } else if (board.checkDraw()) {
+                    Printer.printNicely("It's a draw!");
+                    gameEnded = true;
+                } else {
+                    board.placePiece(ai.playTurn(board), "#");
+                    Printer.printNicely(board.printBoard());
+                    if (board.checkWin("#")) {
+                        Printer.printNicely("Too Bad! The AI won!\n\nAI: " + ai.getVictoryMessage());
+                        gameEnded = true;
+                    } else if (board.checkDraw()) {
+                        Printer.printNicely("It's a draw!");
+                        gameEnded = true;
+                    }
+                }
+            }
         }
     }
 

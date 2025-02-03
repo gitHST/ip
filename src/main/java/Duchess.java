@@ -53,10 +53,20 @@ public class Duchess {
         }
 
         if (!isUsingTerminal) {
-            System.out.println("It seems you are running this program in an IDE, Please run this program in a terminal (cmd, powershell) in order to enjoy the nice animations I created\nINSTRUCTIONS: Open directory \"out/production/ip\" in a terminal and type \"java Duchess\"\n");
-            System.out.println("If you continue to run here, it will function just fine but look far, far worse.\nPress enter to continue and accept the inferior experience of IDE printing limitations...");
-            scanner.nextLine();
-            System.out.println("...Really? Just know you hurt my feelings going forwards :( It would mean the world to me and will only take a second!... [Enter again to continue anyway]");
+            System.out.println("""
+                    It seems you are running this program in an IDE, I would really appreciate it if you could run it in Windows Terminal in order to enjoy the nice animations I created
+                    (They look really cool!)
+                    
+                    INSTRUCTIONS:
+                      - Open directory "out/production/ip" in a Windows Terminal and type "java Duchess"
+                      - Windows Terminal - https://apps.microsoft.com/detail/9n0dx20hk701?hl=en-US&gl=US
+                      - If you're on Mac or Linux, you can use iTerm2 or any other terminal that supports ANSI escape codes
+                      
+                    If you decide to proceed without, ALL marked tasks will still function perfectly fine.
+                    
+                    Press enter to continue and accept the inferior experience of IDE printing limitations...
+                    
+                    """);
             scanner.nextLine();
         }
 
@@ -79,7 +89,7 @@ public class Duchess {
         Duchess duchess = new Duchess();
 
         while (true) {
-            System.out.print("You: ");
+            Printer.printNicely("You: ");
             userInput = scanner.nextLine();
 
             if (userInput.equalsIgnoreCase("quit")) {
@@ -89,12 +99,9 @@ public class Duchess {
                 Printer.printNicely(""" 
                         Here are some commands you can try:
                         
-                          -h: Display help
-                          
-                          quit: Exit the chatbot
-                          
-                          connect4: Play a game of connect 4
-                          
+                          -h:         Display help
+                          quit:       Exit the chatbot
+                          connect4:   Play a game of connect 4
                           Lists:
                             Please use _ for spaces! You know whitespaces flare up my allergies!
                             list {name}: Start a list of name {name} if it doesn't exist, or display the list if it does

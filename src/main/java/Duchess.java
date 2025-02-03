@@ -14,7 +14,7 @@ public class Duchess {
 
     public String getBotResponse(String userInput) {
         if (userInput.toLowerCase().startsWith("list ")) {
-            String[] parts = userInput.split(" ", 4);
+            String[] parts = userInput.trim().split("\\s+", 4);
 
             if (parts.length == 2) {
                 String name = parts[1].trim();
@@ -24,12 +24,19 @@ public class Duchess {
                 listManager.addList(name);
                 return "A new list, by the name of '" + name + "' has been created.";
             } else if (parts.length == 3) {
-                return listManager.addItemToList(parts[1].trim(), parts[2].trim());
+                return listManager.addItemToList(parts[1].trim(), new TextItem(parts[2].trim()));
             } else if (parts.length == 4) {
+                if (parts[2].trim().equalsIgnoreCase(("todo"))) {
+                    return "TODO";
+                } else if (parts[2].trim().equalsIgnoreCase(("deadline"))) {
+                    return "DEADLINE";
+                } else if (parts[2].trim().equalsIgnoreCase(("event"))) {
+                    return "EVENT";
+                }
                 return listManager.toggleItem(parts[1].trim(), parts[2].trim(), parts[3].trim().equals("tick"));
             }
         }
-        if (userInput.equalsIgnoreCase("connect")) {
+        if (userInput.equalsIgnoreCase("connect4")) {
             if (isUsingTerminal) {
                 wantsToPlayCN4 = true;
                 return "You want to play connect four? The game created by Howard Wexler, and first sold under the Connect Four trademark by Milton Bradley in February 1974?\nOkay!\n\n";
@@ -101,13 +108,21 @@ public class Duchess {
             } else if (userInput.equalsIgnoreCase("-h")) {
                 Printer.printNicely(""" 
                         Here are some commands you can try:
+                        
                           -h: Display help
+                          
                           quit: Exit the chatbot
-                          connect: Play a game of connect 4
-                          list {name}: Start a list of name {name} if it doesn't exist, or display the list if it does
-                          list {name} {item}: Add an item to an existing list
-                          list {name} {item} tick: Tick an item in an existing list
-                          list {name} {item} untick: Untick an item in an existing list
+                          
+                          connect4: Play a game of connect 4
+                          
+                          Lists:
+                            list {name}: Start a list of name {name} if it doesn't exist, or display the list if it does
+                            list {name} {item}: Add an item to an existing list
+                            list {name} {item} tick: Tick an item in an existing list
+                            list {name} {item} untick: Untick an item in an existing list
+                            list {name} {item} todo: Add a todo item to an existing list
+                            list {name} {item} deadline: Add a deadline item to an existing list
+                            list {name} {item} event: Add an event item to an existing list
                         """, 1.5);
                 continue;
             }

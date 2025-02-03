@@ -1,9 +1,9 @@
-public class ListItem {
-    String itemText;
-    boolean ticked;
+abstract class ListItem {
+    protected String itemName;
+    protected boolean ticked;
 
-    public ListItem(String itemText) {
-        this.itemText = itemText;
+    public ListItem(String itemName) {
+        this.itemName = itemName;
         this.ticked = false;
     }
 
@@ -15,11 +15,20 @@ public class ListItem {
         this.ticked = false;
     }
 
-    public String toString() {
-        return itemText;
-    }
+    public abstract String getItemType();
 
     public boolean isTicked() {
         return ticked;
     }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    @Override
+    public String toString() {
+        return itemName;
+    }
+
+    public abstract String getListedStringRepresentation(int longestItemLength, int i);
 }

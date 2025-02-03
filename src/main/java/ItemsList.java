@@ -1,15 +1,14 @@
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class StringList {
+public class ItemsList {
     private final List<ListItem> items;
 
-    public StringList(List<ListItem> items) {
+    public ItemsList(List<ListItem> items) {
         this.items = new ArrayList<>(items);
     }
 
-    public StringList() {
+    public ItemsList() {
         this.items = new ArrayList<>();
     }
 
@@ -17,14 +16,14 @@ public class StringList {
         items.add(item);
     }
 
-    public StringList removeItem(ListItem item) {
+    public ItemsList removeItem(ListItem item) {
         List<ListItem> newItems = new ArrayList<>(items);
         newItems.remove(item);
-        return new StringList(newItems);
+        return new ItemsList(newItems);
     }
 
-    public StringList clearList() {
-        return new StringList();
+    public ItemsList clearList() {
+        return new ItemsList();
     }
 
     public List<ListItem> getItems() {
@@ -45,17 +44,8 @@ public class StringList {
                 .orElse(0);
         StringBuilder sb = new StringBuilder("\nList contents:\n");
         for (int i = 0; i < items.size(); i++) {
-            ListItem item = items.get(i);
-            sb
-                    .append(i + 1)
-                    .append(". ")
-                    .append(item)
-                    .append(" ".repeat(Math.max(0, (longestItemLength - item.toString().length()))))
-                    .append(" ")
-                    .append(item.isTicked() ? "[x]" : "[ ]")
-                    .append("\n");
+            sb.append(items.get(i).getListedStringRepresentation(longestItemLength, i));
         }
         return sb.toString();
     }
-
 }

@@ -4,8 +4,8 @@ public class ConnectFourGame {
     private boolean gameEnded = false;
     private ConnectFourBoard board;
     public boolean playGame() throws InterruptedException {
+        System.out.println("\n".repeat(50));
         Printer.printNicely("""
-                
                 Welcome to Connect 4!
                 
                 Controls:
@@ -29,7 +29,6 @@ public class ConnectFourGame {
 
     public void playTurn() throws InterruptedException {
         Scanner scanner = new Scanner(System.in);
-        int col = -1;
         int scale = -1;
         boolean validInput = false;
 
@@ -52,7 +51,7 @@ public class ConnectFourGame {
                 }
             } else {
                 try {
-                    col = Integer.parseInt(input);
+                    int col = Integer.parseInt(input);
                     if (col >= 0 && col < board.getCols()) {
                         validInput = true;
                     } else {

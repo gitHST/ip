@@ -1,44 +1,53 @@
 import java.util.*;
 
 class ListManager {
-    private HashMap<String, StringList> lists;
+    private HashMap<String, ItemsList> lists;
 
     public ListManager() {
         lists = new HashMap<>();
     }
 
     public void addList(String name) {
-        lists.put(name, new StringList());
+        lists.put(name, new ItemsList());
     }
 
     public String getListContent(String name) {
         return lists.containsKey(name) ? lists.get(name).toString() : "I’m afraid I have no list under that name, darling.";
     }
 
-    public String addItemToList(String name, String itemName) {
+    public String addItemToList(String name, ListItem item) {
         if (!lists.containsKey(name)) {
             return "I’m afraid I have no list under that name, darling.";
         }
 
-        StringList list = lists.get(name);
+        ItemsList list = lists.get(name);
         List<ListItem> items = list.getItems();
 
-        String newItemName = itemName;
+        String newItemName = item.toString();
         int count = 1;
 
         HashSet<String> existingNames = new HashSet<>();
-        for (ListItem item : items) {
-            existingNames.add(item.toString());
+        for (ListItem existingItem : items) {
+            existingNames.add(existingItem.toString());
         }
 
         while (existingNames.contains(newItemName)) {
-            newItemName = itemName + "(" + count + ")";
+            newItemName = item.toString() + "(" + count + ")";
             count++;
         }
 
-        list.addItem(new ListItem(newItemName));
+        if (item instanceof TextItem) {
+            item = new TextItem(newItemName);
+        }
+        // ELSE IF
+
+
+
+
+        list.addItem(item);
         return "Added '" + newItemName + "' to list '" + name + "'.";
     }
+
 
     public String toggleItem(String name, String itemName, boolean tick) {
         if (!lists.containsKey(name)) {

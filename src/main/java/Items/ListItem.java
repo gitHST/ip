@@ -17,20 +17,12 @@ public abstract class ListItem {
         this.ticked = false;
     }
 
-    public abstract String getItemType();
-
-    public boolean isTicked() {
-        return ticked;
-    }
-
-    public String getItemName() {
-        return itemName;
-    }
-
     @Override
     public String toString() {
         return itemName;
     }
 
-    public abstract String getListedStringRepresentation(int longestItemLength, int i);
+    public abstract String getListedStringRepresentation(int whiteSpaceCount, int i);
+
+    public abstract int getLengthOfString();
 }

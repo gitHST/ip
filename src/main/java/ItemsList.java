@@ -6,26 +6,12 @@ import java.util.List;
 public class ItemsList {
     private final List<ListItem> items;
 
-    public ItemsList(List<ListItem> items) {
-        this.items = new ArrayList<>(items);
-    }
-
     public ItemsList() {
         this.items = new ArrayList<>();
     }
 
     public void addItem(ListItem item) {
         items.add(item);
-    }
-
-    public ItemsList removeItem(ListItem item) {
-        List<ListItem> newItems = new ArrayList<>(items);
-        newItems.remove(item);
-        return new ItemsList(newItems);
-    }
-
-    public ItemsList clearList() {
-        return new ItemsList();
     }
 
     public List<ListItem> getItems() {
@@ -37,17 +23,14 @@ public class ItemsList {
         if (items.isEmpty()) {
             return "The list is empty.";
         }
-        int longestItemLength = items
-                .stream()
-                .mapToInt(item -> item
-                        .toString()
-                        .length())
-                .max()
-                .orElse(0);
+
         StringBuilder sb = new StringBuilder("\nList contents:\n");
+        int maxLength = items.stream().mapToInt(ListItem::getLengthOfString).max().orElse(0);
+
         for (int i = 0; i < items.size(); i++) {
-            sb.append(items.get(i).getListedStringRepresentation(longestItemLength, i));
+            sb.append(items.get(i).getListedStringRepresentation(maxLength - items.get(i).getLengthOfString(), i));
         }
         return sb.toString();
     }
+
 }

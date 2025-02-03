@@ -6,18 +6,18 @@ public class TextItem extends ListItem {
     }
 
     @Override
-    public String getItemType() {
-        return "Items.TextItem";
-    }
-
-    @Override
-    public String getListedStringRepresentation(int longestItemLength, int i) {
+    public String getListedStringRepresentation(int whiteSpaceCount, int i) {
         return i + 1
                 + ". "
                 + itemName
-                + " ".repeat(Math.max(0, (longestItemLength - itemName.length())))
+                + " ".repeat(whiteSpaceCount)
                 + " "
                 + (ticked ? "[x]" : "[ ]")
                 + "\n";
+    }
+
+    @Override
+    public int getLengthOfString() {
+        return itemName.length();
     }
 }

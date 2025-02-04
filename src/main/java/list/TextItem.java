@@ -1,4 +1,4 @@
-package Items;
+package list;
 
 public class TextItem extends ListItem {
     public TextItem(String itemText) {

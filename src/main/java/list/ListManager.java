@@ -1,10 +1,8 @@
-import Items.ListItem;
-import Items.TextItem;
-import Items.DeadlineItem;
+package list;
 
 import java.util.*;
 
-class ListManager {
+public class ListManager {
     private HashMap<String, ItemsList> lists;
 
     public ListManager() {
@@ -54,7 +52,7 @@ class ListManager {
             String toDate = parts[7].trim();
 
             if (command.equalsIgnoreCase("event") && fromKeyword.equalsIgnoreCase("from") && toKeyword.equalsIgnoreCase("to")) {
-                return addItemToList(listName, new Items.EventItem(eventName, fromDate, toDate));
+                return addItemToList(listName, new list.EventItem(eventName, fromDate, toDate));
             }
             return "Are you trying to add an event darling? I'm afraid I don't follow... Please type -h for a hand xo";
         }

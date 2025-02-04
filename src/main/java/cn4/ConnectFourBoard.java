@@ -1,3 +1,5 @@
+package cn4;
+
 public class ConnectFourBoard {
     private final int rows;
     private final int cols;

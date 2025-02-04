@@ -1,4 +1,4 @@
-# Duchess User Guide
+# duchess.Duchess User Guide
 
 // Update the title above to match the actual product name
 

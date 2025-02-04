@@ -1,4 +1,6 @@
-import Items.ListItem;
+package list;
+
+import list.ListItem;
 
 import java.util.ArrayList;
 import java.util.List;

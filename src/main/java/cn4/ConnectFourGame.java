@@ -1,3 +1,7 @@
+package cn4;
+
+import duchess.Printer;
+
 import java.util.Scanner;
 
 public class ConnectFourGame {

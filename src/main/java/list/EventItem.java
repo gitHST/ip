@@ -1,18 +1,20 @@
-package Items;
+package list;
 
-public class DeadlineItem extends ListItem {
-    String deadline;
-    public DeadlineItem(String itemName, String deadline) {
+public class EventItem extends ListItem {
+    String from;
+    String to;
+    public EventItem(String itemName, String from, String to) {
         super(itemName);
-        this.deadline = deadline;
+        this.from = from;
+        this.to = to;
     }
 
     @Override
     public String getListedStringRepresentation(int whiteSpaceCount, int i) {
         return i + 1
-                + ". [Deadline] "
+                + ". [Event] "
                 + itemName
-                + " (by " + deadline + ")"
+                + " (from " + from + " to " + to + ")"
                 + " ".repeat(whiteSpaceCount)
                 + " "
                 + (ticked ? "[x]" : "[ ]")
@@ -21,6 +23,6 @@ public class DeadlineItem extends ListItem {
 
     @Override
     public int getLengthOfString() {
-        return 17 + itemName.length() + deadline.length();
+        return 20 + itemName.length() + from.length() + to.length();
     }
 }

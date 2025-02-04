@@ -1,4 +1,4 @@
-package Items;
+package list;
 
 public abstract class ListItem {
     protected String itemName;

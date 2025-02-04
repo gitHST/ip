@@ -1,3 +1,5 @@
+package cn4;
+
 import java.util.Random;
 public class ConnectFourAI {
     int difficulty;

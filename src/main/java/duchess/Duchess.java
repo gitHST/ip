@@ -1,3 +1,8 @@
+package duchess;
+
+import cn4.ConnectFourGame;
+import list.ListManager;
+
 import java.util.Random;
 import java.util.Scanner;
 
@@ -58,7 +63,7 @@ public class Duchess {
                     (They look really cool!)
                     
                     INSTRUCTIONS:
-                      - Open directory "out/production/ip" in a Windows Terminal and type "java Duchess"
+                      - Open directory "out/production/ip" in a Windows Terminal and type "java duchess.Duchess"
                       - Windows Terminal - https://apps.microsoft.com/detail/9n0dx20hk701?hl=en-US&gl=US
                       - If you're on Mac or Linux, you can use iTerm2 or any other terminal that supports ANSI escape codes
                       
@@ -115,7 +120,7 @@ public class Duchess {
                 continue;
             }
 
-            Printer.printNicely("Duchess: " + duchess.getBotResponse(userInput));
+            Printer.printNicely("duchess.Duchess: " + duchess.getBotResponse(userInput));
 
             if (duchess.wantsToPlayCN4) {
                 Printer.printNicely("Loading");
@@ -125,7 +130,7 @@ public class Duchess {
                 }
                 boolean won = new ConnectFourGame().playGame();
                 duchess.wantsToPlayCN4 = false;
-                Printer.printNicely("Duchess: You " + (won ? "won! well played sire..." : "lost! sucks to suck..."));
+                Printer.printNicely("duchess.Duchess: You " + (won ? "won! well played sire..." : "lost! sucks to suck..."));
             }
         }
 

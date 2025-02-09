@@ -4,10 +4,19 @@ import duchess.Printer;
 
 import java.util.Scanner;
 
+/**
+ * Represents a Connect Four game.
+ */
 public class ConnectFourGame {
     private boolean gameEnded = false;
     private ConnectFourBoard board;
     private ConnectFourAI ai;
+
+    /**
+     * Starts the Connect Four game.
+     * @return true when the game ends.
+     * @throws InterruptedException if the thread is interrupted.
+     */
     public boolean playGame() throws InterruptedException {
         System.out.println("\n".repeat(50));
         Printer.printNicely("""
@@ -21,7 +30,7 @@ public class ConnectFourGame {
                 Your opponent is:  #
                 
                 What size board would you like to play on? (e.g. 6x7)""");
-        int[] boardSize = askBoardSize();
+        int[] boardSize = getBoardSize();
         board = new ConnectFourBoard(boardSize[0], boardSize[1]);
         Printer.printNicely(board.printBoard());
         ai = new ConnectFourAI(1);
@@ -33,6 +42,10 @@ public class ConnectFourGame {
         return true;
     }
 
+    /**
+     * Handles a single turn in the game.
+     * @throws InterruptedException if the thread is interrupted.
+     */
     public void playTurn() throws InterruptedException {
         Scanner scanner = new Scanner(System.in);
         int scale = -1;
@@ -50,9 +63,7 @@ public class ConnectFourGame {
                     } else {
                         Printer.printNicely("Good sir, please enter the scale as an integer between 1 and 5. Much appreciated!");
                     }
-                } catch (NumberFormatException e) {
-                    Printer.printNicely("Good sir, please enter the scale as an integer between 1 and 5. Much appreciated!");
-                } catch (IndexOutOfBoundsException e) {
+                } catch (NumberFormatException | IndexOutOfBoundsException e) {
                     Printer.printNicely("Good sir, please provide a valid scale number after 'scale'. Much appreciated!");
                 }
             } else {
@@ -63,7 +74,7 @@ public class ConnectFourGame {
                     } else {
                         Printer.printNicely("Hmm... very clever of you! I have to ask that you kindly enter a column number within the board size.");
                     }
-                } catch (NumberFormatException | InterruptedException e) {
+                } catch (NumberFormatException e) {
                     Printer.printNicely("Good sir, please enter the column number as an integer. Much appreciated!");
                 }
             }
@@ -76,7 +87,6 @@ public class ConnectFourGame {
                 Printer.printNicely("You can't go there silly! Where do you really want to go?...\n[Hint, it's a number between 0 and " + (board.getCols() - 1) + "!!]");
                 scanner.nextLine();
             } else {
-                // If the piece gets placed
                 Printer.printNicely(board.printBoard());
                 if (board.checkWin("@")) {
                     Printer.printNicely("Congratulations! You won!");
@@ -85,22 +95,43 @@ public class ConnectFourGame {
                     Printer.printNicely("It's a draw!");
                     gameEnded = true;
                 } else {
-                    board.placePiece(ai.playTurn(board), "#");
-                    Printer.printNicely(board.printBoard());
-                    if (board.checkWin("#")) {
-                        Printer.printNicely("Too Bad! The AI won!\n\nAI: " + ai.getVictoryMessage());
-                        gameEnded = true;
-                    } else if (board.checkDraw()) {
-                        Printer.printNicely("It's a draw!");
-                        gameEnded = true;
-                    }
+                    simulateAITurn();
                 }
             }
         }
     }
 
+    /**
+     * Simulates the AI's turn in the game.
+     * @throws InterruptedException if the thread is interrupted.
+     */
+    private void simulateAITurn() throws InterruptedException {
+        for (int i = 0; i < 3; i++) {
+            System.out.print("\rThinking   ");
+            Thread.sleep(150);
 
-    public int[] askBoardSize() {
+            for (int j = 0; j < 3; j++) {
+                System.out.print("\rThinking" + ".".repeat(j + 1));
+                Thread.sleep(150);
+            }
+        }
+        System.out.print("\r             \n");
+        board.placePiece(ai.playTurn(board), "#");
+        Printer.printNicely(board.printBoard());
+        if (board.checkWin("#")) {
+            Printer.printNicely("Too Bad! The AI won!\n\nAI: " + ai.getVictoryMessage());
+            gameEnded = true;
+        } else if (board.checkDraw()) {
+            Printer.printNicely("It's a draw!");
+            gameEnded = true;
+        }
+    }
+
+    /**
+     * Gets the board size from user input.
+     * @return an array containing the number of rows and columns.
+     */
+    public int[] getBoardSize() {
         Scanner scanner = new Scanner(System.in);
         int rows = 0, cols = 0;
         boolean validInput = false;
@@ -134,4 +165,3 @@ public class ConnectFourGame {
         }
     }
 }
-

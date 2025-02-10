@@ -8,4 +8,3 @@ public class DuchessException extends Exception {
         super(message);
     }
 }
-

@@ -1,4 +1,4 @@
-package list;
+package duchess.list;
 
 /**
  * Represents an item in a list with text representation and checkable state.

@@ -1,4 +1,4 @@
-package cn4;
+package duchess.cn4;
 
 /**
  * Represents a Connect Four board with dynamic scaling and piece placement.

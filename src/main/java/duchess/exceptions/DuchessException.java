@@ -1,4 +1,4 @@
-package exceptions;
+package duchess.exceptions;
 
 /**
  * Custom exception class to represent errors specific to Duchess chatbot.

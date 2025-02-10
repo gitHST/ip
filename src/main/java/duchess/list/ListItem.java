@@ -1,4 +1,4 @@
-package list;
+package duchess.list;
 
 /**
  * Represents an item in the list, either ticked or unticked.

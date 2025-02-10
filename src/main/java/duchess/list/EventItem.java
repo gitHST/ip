@@ -1,4 +1,4 @@
-package list;
+package duchess.list;
 
 /**
  * Represents an event item in the list, extending the ListItem class.

@@ -1,6 +1,5 @@
-package list;
+package duchess.list;
 
-import list.ListItem;
 import java.util.ArrayList;
 import java.util.List;
 

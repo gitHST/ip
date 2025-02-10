@@ -1,4 +1,4 @@
-package list;
+package duchess.list;
 
 /**
  * Represents a list item with a deadline, extending the base ListItem class.

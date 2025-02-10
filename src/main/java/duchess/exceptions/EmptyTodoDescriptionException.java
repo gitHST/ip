@@ -1,4 +1,4 @@
-package exceptions;
+package duchess.exceptions;
 
 /**
  * Exception thrown when the description of a todo is empty.

@@ -1,4 +1,4 @@
-package cn4;
+package duchess.cn4;
 
 import java.util.Random;
 

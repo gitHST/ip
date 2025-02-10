@@ -1,9 +1,9 @@
 package duchess;
 
-import cn4.ConnectFourGame;
-import exceptions.DuchessException;
-import exceptions.UnrecognizedCommandException;
-import list.ListManager;
+import duchess.cn4.ConnectFourGame;
+import duchess.exceptions.DuchessException;
+import duchess.exceptions.UnrecognizedCommandException;
+import duchess.list.ListManager;
 
 import java.util.Random;
 import java.util.Scanner;

@@ -1,6 +1,6 @@
-package list;
+package duchess.list;
 
-import exceptions.EmptyTodoDescriptionException;
+import duchess.exceptions.EmptyTodoDescriptionException;
 
 import java.util.*;
 

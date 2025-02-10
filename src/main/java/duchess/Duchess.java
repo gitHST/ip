@@ -1,6 +1,8 @@
 package duchess;
 
 import cn4.ConnectFourGame;
+import exceptions.DuchessException;
+import exceptions.UnrecognizedCommandException;
 import list.ListManager;
 
 import java.util.Random;
@@ -24,7 +26,7 @@ public class Duchess {
                 list {name} {item}: Add an item to an existing list
                 list {name} {item} tick: Tick an item in an existing list
                 list {name} {item} untick: Untick an item in an existing list
-                list {name} {item} todo: Add a todo item
+                list {name} todo: Add a todo item
                 list {name} deadline {item} by {deadline}: Add a deadline item
                 list {name} event {item} from {from} to {to}: Add an event item
             """;
@@ -55,19 +57,24 @@ public class Duchess {
      *
      * @param userInput The input string from the user.
      * @return A response string from the bot.
+     * @throws DuchessException If an error occurs while processing the input.
      */
-    public String getBotResponse(String userInput) {
+    public String getBotResponse(String userInput) throws DuchessException {
         String lowerCaseInput = userInput.toLowerCase();
 
         if (lowerCaseInput.startsWith("list ")) {
-            return listManager.handleListCommand(userInput);
+            try {
+                return listManager.handleListCommand(userInput);
+            } catch (Exception e) {
+                throw new DuchessException("An error occurred while processing your list command.");
+            }
         }
 
         if (lowerCaseInput.equals("connect4")) {
             return handleConnectFourRequest();
         }
 
-        return getRandomInvalidResponse();
+        throw new UnrecognizedCommandException();
     }
 
     /**
@@ -81,7 +88,7 @@ public class Duchess {
             return "You want to play connect four? Okay!\n\n";
         }
         return "I'm sorry dear, we simply can't play connect four in this environment! :( " +
-               "Please be a doll and run me in a terminal to play connect four.";
+                "Please be a doll and run me in a terminal to play connect four.";
     }
 
     /**
@@ -120,7 +127,11 @@ public class Duchess {
                 continue;
             }
 
-            Printer.printNicely("Duchess: " + duchess.getBotResponse(userInput));
+            try {
+                Printer.printNicely("Duchess: " + duchess.getBotResponse(userInput));
+            } catch (DuchessException e) {
+                Printer.printNicely("Duchess: " + e.getMessage());
+            }
 
             if (duchess.wantsToPlayCN4) {
                 launchConnectFour(duchess);
@@ -185,6 +196,6 @@ public class Duchess {
         }
         boolean won = new ConnectFourGame().playGame();
         duchess.wantsToPlayCN4 = false;
-        Printer.printNicely("Duchess: You " + (won ? "won! Well played!" : "lost! Better luck next time."));
+        Printer.printNicely("Duchess: " + (won ? "You won!" : "Oh no, you lost!") + "\n  ~Type -h for help~");
     }
 }

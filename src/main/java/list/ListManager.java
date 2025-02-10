@@ -1,5 +1,7 @@
 package list;
 
+import exceptions.EmptyTodoDescriptionException;
+
 import java.util.*;
 
 /**
@@ -39,23 +41,22 @@ public class ListManager {
      * @param userInput The user's input command.
      * @return A response based on the user's command.
      */
-    public String handleListCommand(String userInput) {
+    public String handleListCommand(String userInput) throws EmptyTodoDescriptionException {
+        if (userInput.startsWith("list") && userInput.contains("todo") && userInput.split(" ").length == 2) {
+            throw new EmptyTodoDescriptionException();
+        }
         String[] parts = userInput.trim().split("\\s+", 8);
 
-        switch (parts.length) {
-            case 2:
-                return handleListCreation(parts[1].trim());
-            case 3:
-                return addItemToList(parts[1].trim(), new TextItem(parts[2].trim()));
-            case 4:
-                return toggleItem(parts[1].trim(), parts[2].trim(), parts[3].trim().equals("tick"));
-            case 6:
-                return handleDeadline(parts[1].trim(), parts[2].trim(), parts[3].trim(), parts[4].trim(), parts[5].trim());
-            case 8:
-                return handleEvent(parts[1].trim(), parts[2].trim(), parts[3].trim(), parts[4].trim(), parts[5].trim(), parts[6].trim(), parts[7].trim());
-            default:
-                return "I’m afraid I didn’t catch that command properly.";
-        }
+        return switch (parts.length) {
+            case 2 -> handleListCreation(parts[1].trim());
+            case 3 -> addItemToList(parts[1].trim(), new TextItem(parts[2].trim()));
+            case 4 -> toggleItem(parts[1].trim(), parts[2].trim(), parts[3].trim().equals("tick"));
+            case 6 ->
+                    handleDeadline(parts[1].trim(), parts[2].trim(), parts[3].trim(), parts[4].trim(), parts[5].trim());
+            case 8 ->
+                    handleEvent(parts[1].trim(), parts[2].trim(), parts[3].trim(), parts[4].trim(), parts[5].trim(), parts[6].trim(), parts[7].trim());
+            default -> "I’m afraid I didn’t catch that command properly.";
+        };
     }
 
     /**

@@ -101,7 +101,7 @@ public class ListManager {
      */
     private String handleEvent(String listName, String command, String eventName, String fromKeyword, String fromDate, String toKeyword, String toDate) {
         if (command.equalsIgnoreCase("event") && fromKeyword.equalsIgnoreCase("from") && toKeyword.equalsIgnoreCase("to")) {
-            return addItemToList(listName, new list.EventItem(eventName, fromDate, toDate));
+            return addItemToList(listName, new duchess.list.EventItem(eventName, fromDate, toDate));
         }
         return "Are you trying to add an event darling? I'm afraid I don't follow... Please type -h for a hand xo";
     }

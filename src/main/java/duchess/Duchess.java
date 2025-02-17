@@ -26,10 +26,12 @@ public class Duchess {
                 list {name} {item}: Add an item to an existing list
                 list {name} {item} tick: Tick an item in an existing list
                 list {name} {item} untick: Untick an item in an existing list
+                list {name} delete {item}: Delete an item from an existing list
                 list {name} todo: Add a todo item
                 list {name} deadline {item} by {deadline}: Add a deadline item
                 list {name} event {item} from {from} to {to}: Add an event item
             """;
+
     private static final String[] INVALID_COMMAND_RESPONSES = {
             "I'm sorry dear, I didn't quite catch that...",
             "You'll have to speak up darling, I'm a little hard of hearing...",
@@ -157,10 +159,18 @@ public class Duchess {
     private static void promptTerminalWarning(Scanner scanner) {
         if (!IS_USING_TERMINAL) {
             System.out.println("""
-    It seems you are running this program in an IDE...
-    Please consider running it in a terminal for the best experience.
-    Press enter to continue...
-            """);
+                    It seems you are running this program in an IDE, I would really appreciate it if you could run it in Windows Terminal in order to enjoy the nice animations I created
+                    
+                    INSTRUCTIONS:
+                      - Open directory "out/production/ip" in a Windows Terminal and type "java duchess.Duchess"
+                      - Windows Terminal - https://apps.microsoft.com/detail/9n0dx20hk701?hl=en-US&gl=US
+                      - If you're on Mac or Linux, you can use iTerm2 or any other terminal that supports ANSI escape codes
+                      
+                    If you decide to proceed without, ALL marked tasks will still function perfectly fine.
+                    
+                    Press enter to continue and accept the inferior IDE experience...
+                    
+                    """);
             scanner.nextLine();
         }
     }

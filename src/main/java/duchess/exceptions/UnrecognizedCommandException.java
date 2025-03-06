@@ -4,6 +4,8 @@ import java.util.Random;
 
 /**
  * Exception thrown when the user enters an unrecognized command.
+ * A random message is selected from a predefined set of responses
+ * to provide feedback to the user.
  */
 public class UnrecognizedCommandException extends DuchessException {
     private static final String[] INVALID_COMMAND_RESPONSES = {
@@ -18,12 +20,21 @@ public class UnrecognizedCommandException extends DuchessException {
             "Now, now, darling, you’ve lost me with that one..."
     };
 
+    /**
+     * Selects a random response from the list of invalid command responses.
+     *
+     * @return A randomly selected response indicating an unrecognized command.
+     */
     private static String getRandomInvalidResponse() {
         Random random = new Random();
         int index = random.nextInt(INVALID_COMMAND_RESPONSES.length);
         return INVALID_COMMAND_RESPONSES[index] + "\n  ~Type -h for help~";
     }
 
+    /**
+     * Constructs a new {@code UnrecognizedCommandException} with a randomly
+     * chosen response from {@code INVALID_COMMAND_RESPONSES}.
+     */
     public UnrecognizedCommandException() {
         super(getRandomInvalidResponse());
     }

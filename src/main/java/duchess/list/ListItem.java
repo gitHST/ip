@@ -1,7 +1,7 @@
 package duchess.list;
 
 /**
- * Represents an item in the list, either ticked or unticked.
+ * Represents an item in a list, which can be either ticked or unticked.
  * This is an abstract class meant to be extended by specific item types.
  */
 public abstract class ListItem {
@@ -9,11 +9,11 @@ public abstract class ListItem {
     /** The name of the list item. */
     protected String itemName;
 
-    /** A flag to indicate whether the item is ticked or not. */
+    /** Indicates whether the item is ticked. */
     protected boolean ticked;
 
     /**
-     * Constructs a ListItem with the given name, initializing the ticked flag to false.
+     * Constructs a ListItem with the given name, initializing it as unticked.
      *
      * @param itemName the name of the item
      */
@@ -47,19 +47,18 @@ public abstract class ListItem {
     }
 
     /**
-     * Retrieves a string representation of the item, formatted with the specified white space.
+     * Retrieves a formatted string representation of the item.
      *
-     * @param whiteSpaceCount the number of spaces to prepend
-     * @param i an index or identifier for the item (used in specific implementations)
+     * @param whiteSpaceCount the number of leading spaces for formatting
+     * @param i an index or identifier for the item (usage may vary in implementations)
      * @return the formatted string representation of the item
      */
-
     public abstract String getListedStringRepresentation(int whiteSpaceCount, int i);
 
     /**
      * Returns the length of the string representation of the item.
      *
-     * @return the length of the string representation
+     * @return the length of the item's string representation
      */
     public abstract int getLengthOfString();
 }

@@ -159,8 +159,7 @@ public class Duchess {
         if (!IS_USING_TERMINAL) {
             System.out.println("""
     It seems you are running this program in an IDE...
-    Please consider running it in windows terminal for the best experience.
-            """);
+    Please consider running it in windows terminal for the best experience.""");
         }
     }
 

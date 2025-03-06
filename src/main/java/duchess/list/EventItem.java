@@ -45,11 +45,6 @@ public class EventItem extends ListItem {
                 (ticked ? "[x]" : "[ ]"));
     }
 
-    @Override
-    public String toCsv() {
-        return "EventItem," + (ticked ? "1" : "0") + "," + itemName + "," + from + "," + to;
-    }
-
 
     /**
      * Returns the length of the string representation of this event item.

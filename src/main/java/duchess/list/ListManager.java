@@ -2,7 +2,6 @@ package duchess.list;
 
 import duchess.exceptions.EmptyTodoDescriptionException;
 
-import java.io.*;
 import java.util.*;
 
 /**
@@ -13,11 +12,10 @@ public class ListManager {
     private HashMap<String, ItemsList> lists;
 
     /**
-     * Constructs a new ListManager, initializing an empty map of lists and loading saved lists.
+     * Constructs a new ListManager, initializing an empty map of lists.
      */
     public ListManager() {
         lists = new HashMap<>();
-        loadListsFromFiles();
     }
 
     /**
@@ -26,7 +24,6 @@ public class ListManager {
      */
     public void addList(String name) {
         lists.put(name, new ItemsList());
-        saveListToFile(name);
     }
 
     /**
@@ -44,23 +41,9 @@ public class ListManager {
      * @return A response based on the user's command.
      */
     public String handleListCommand(String userInput) throws EmptyTodoDescriptionException {
-        if (userInput.startsWith("list") && userInput.contains("todo") && userInput.split(" ").length >= 4) {
-            String[] parts = userInput.trim().split("\\s+", 4);
-
-            if (parts.length == 4) {
-                String listName = parts[1].trim();
-                String todoDescription = parts[3].trim();
-
-                // Check if the description is empty
-                if (todoDescription.isEmpty()) {
-                    throw new EmptyTodoDescriptionException();
-                }
-
-                // Add the item to the list
-                return addItemToList(listName, new TextItem(todoDescription));
-            }
+        if (userInput.startsWith("list") && userInput.contains("todo") && userInput.split(" ").length == 2) {
+            throw new EmptyTodoDescriptionException();
         }
-
         String[] parts = userInput.trim().split("\\s+", 8);
 
         return switch (parts.length) {
@@ -72,7 +55,6 @@ public class ListManager {
             default -> "I’m afraid I didn’t catch that command properly.";
         };
     }
-
 
     private String handleItemModification(String listName, String itemName, String action) {
         return switch (action.toLowerCase()) {
@@ -95,7 +77,6 @@ public class ListManager {
             ListItem item = iterator.next();
             if (item.toString().equals(itemName)) {
                 iterator.remove();
-                saveListToFile(listName);
                 return "Deleted '" + itemName + "' from list '" + listName + "'.";
             }
         }
@@ -129,9 +110,27 @@ public class ListManager {
             return "I’m afraid I have no list under that name, darling.";
         }
 
-        lists.get(name).addItem(item);
-        saveListToFile(name);
-        return "Added '" + item.toString() + "' to list '" + name + "'.";
+        ItemsList list = lists.get(name);
+        List<ListItem> items = list.getItems();
+        String newItemName = item.toString();
+        int count = 1;
+
+        HashSet<String> existingNames = new HashSet<>();
+        for (ListItem existingItem : items) {
+            existingNames.add(existingItem.toString());
+        }
+
+        while (existingNames.contains(newItemName)) {
+            newItemName = item.toString() + "(" + count + ")";
+            count++;
+        }
+
+        if (item instanceof TextItem) {
+            item = new TextItem(newItemName);
+        }
+
+        list.addItem(item);
+        return "Added '" + newItemName + "' to list '" + name + "'.";
     }
 
     public String toggleItem(String name, String itemName, boolean tick) {
@@ -142,41 +141,13 @@ public class ListManager {
             if (item.toString().equals(itemName)) {
                 if (tick) {
                     item.tick();
+                    return "Ticked '" + item + "' in list '" + name + "'.";
                 } else {
                     item.untick();
+                    return "Unticked '" + item + "' in list '" + name + "'.";
                 }
-                saveListToFile(name);
-                return (tick ? "Ticked" : "Unticked") + " '" + item + "' in list '" + name + "'.";
             }
         }
         return "I’m afraid I have no item by that name in list '" + name + "', darling.";
-    }
-
-    private void saveListToFile(String name) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(name + ".csv"))) {
-            for (ListItem item : lists.get(name).getItems()) {
-                writer.println(item.toCsv());
-            }
-        } catch (IOException e) {
-            System.err.println("Error saving list " + name + " to file.");
-        }
-    }
-
-    private void loadListsFromFiles() {
-        File directory = new File(".");
-        for (File file : directory.listFiles()) {
-            if (file.getName().endsWith(".csv")) {
-                String listName = file.getName().replace(".csv", "");
-                ItemsList list = new ItemsList();
-                try (Scanner scanner = new Scanner(file)) {
-                    while (scanner.hasNextLine()) {
-                        list.addItem(ListItem.fromCsv(scanner.nextLine()));
-                    }
-                    lists.put(listName, list);
-                } catch (IOException e) {
-                    System.err.println("Error loading list " + listName + " from file.");
-                }
-            }
-        }
     }
 }

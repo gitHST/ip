@@ -56,33 +56,6 @@ public abstract class ListItem {
 
     public abstract String getListedStringRepresentation(int whiteSpaceCount, int i);
 
-    public abstract String toCsv();
-
-    /**
-     * Converts a CSV string into a ListItem of the correct subclass.
-     * The CSV format must start with the type identifier.
-     *
-     * @param s The CSV string.
-     * @return A ListItem object parsed from the CSV data.
-     */
-    public static ListItem fromCsv(String s) {
-        String[] parts = s.split(",", 2);  // Split into type and the rest of the data
-        return switch (parts[0]) {
-            case "TextItem" -> {
-                // format is "TextItem,ticked,text"
-            }
-            case "DeadlineItem" -> {
-                // format is "DeadlineItem,ticked,text,by"
-            }
-            case "EventItem" -> {
-                // format is "EventItem,ticked,text,from,to"
-            }
-            default -> throw new IllegalArgumentException("Unknown item type: " + parts[0] + ", Entire s: " + s);
-        };
-    }
-
-
-
     /**
      * Returns the length of the string representation of the item.
      *

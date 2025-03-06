@@ -32,11 +32,6 @@ public class TextItem extends ListItem {
                 (ticked ? "[x]" : "[ ]"));
     }
 
-    @Override
-    public String toCsv() {
-        return "TextItem," + (ticked ? "1" : "0") + "," + itemName;
-    }
-
     /**
      * Returns the length of the item's text representation.
      *

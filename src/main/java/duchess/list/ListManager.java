@@ -45,7 +45,7 @@ public class ListManager {
      * @throws EmptyTodoDescriptionException If the user attempts to create a todo without a description.
      */
     public String handleListCommand(String userInput) throws EmptyTodoDescriptionException {
-        if (userInput.startsWith("list") && userInput.contains("todo") && userInput.split(" ").length == 2) {
+        if (userInput.startsWith("list") && userInput.contains("todo") && userInput.split(" ").length == 3) {
             throw new EmptyTodoDescriptionException();
         }
         String[] parts = userInput.trim().split("\\s+", 8);

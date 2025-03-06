@@ -41,7 +41,7 @@ public class ListManager {
      * @return A response based on the user's command.
      */
     public String handleListCommand(String userInput) throws EmptyTodoDescriptionException {
-        if (userInput.startsWith("list") && userInput.contains("todo") && userInput.split(" ").length == 2) {
+        if (userInput.startsWith("list") && userInput.contains("todo") && userInput.split(" ").length == 3) {
             throw new EmptyTodoDescriptionException();
         }
         String[] parts = userInput.trim().split("\\s+", 8);

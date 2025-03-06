@@ -85,12 +85,14 @@ public class ConnectFourBoard {
      *
      * @return The formatted board as a string.
      */
-    public String printBoard() {
+    public String printBoard(boolean replaceOldBoard) {
         StringBuilder boardString = new StringBuilder();
         int cellWidth = (2 * scale) - 1;
         int rowHeight = (scale - 1) / 2 + 1;
 
-        addCursorReset(boardString, rowHeight);
+        if (replaceOldBoard) {
+            addCursorReset(boardString, rowHeight);
+        }
         addBoardTopBorder(boardString, cellWidth);
         addBoardRows(boardString, cellWidth, rowHeight);
         addColumnLabels(boardString, cellWidth);

@@ -35,6 +35,11 @@ public class DeadlineItem extends ListItem {
                 + " " + (ticked ? "[x]" : "[ ]") + "\n";
     }
 
+    @Override
+    public String toCsv() {
+        return "DeadlineItem," + (ticked ? "1" : "0") + "," + itemName + "," + deadline;
+    }
+
     /**
      * Calculates the length of the string representation of this item.
      *

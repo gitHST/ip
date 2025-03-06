@@ -24,6 +24,7 @@ public class Duchess {
                 Please use _ for spaces!
                 list {name}: Start or display a list named {name}
                 list {name} {item}: Add an item to an existing list
+                list {name} {item} delete: Remove an item from an existing list
                 list {name} {item} tick: Tick an item in an existing list
                 list {name} {item} untick: Untick an item in an existing list
                 list {name} todo: Add a todo item
@@ -158,10 +159,8 @@ public class Duchess {
         if (!IS_USING_TERMINAL) {
             System.out.println("""
     It seems you are running this program in an IDE...
-    Please consider running it in a terminal for the best experience.
-    Press enter to continue...
+    Please consider running it in windows terminal for the best experience.
             """);
-            scanner.nextLine();
         }
     }
 

@@ -32,7 +32,7 @@ public class ConnectFourGame {
                 What size board would you like to play on? (e.g. 6x7)""");
         int[] boardSize = getBoardSize();
         board = new ConnectFourBoard(boardSize[0], boardSize[1]);
-        Printer.printNicely(board.printBoard());
+        Printer.printNicely(board.printBoard(true));
         ai = new ConnectFourAI(1);
 
         while (!gameEnded) {
@@ -81,13 +81,13 @@ public class ConnectFourGame {
         }
         if (scale != -1) {
             board.setScale(scale);
-            Printer.printNicely(board.printBoard());
+            Printer.printNicely(board.printBoard(true));
         } else {
             if (!board.placePiece(Integer.parseInt(input), "@")) {
                 Printer.printNicely("You can't go there silly! Where do you really want to go?...\n[Hint, it's a number between 0 and " + (board.getCols() - 1) + "!!]");
                 scanner.nextLine();
             } else {
-                Printer.printNicely(board.printBoard());
+                Printer.printNicely(board.printBoard(true));
                 if (board.checkWin("@")) {
                     Printer.printNicely("Congratulations! You won!");
                     gameEnded = true;
@@ -117,7 +117,7 @@ public class ConnectFourGame {
         }
         System.out.print("\r             \n");
         board.placePiece(ai.playTurn(board), "#");
-        Printer.printNicely(board.printBoard());
+        Printer.printNicely(board.printBoard(true));
         if (board.checkWin("#")) {
             Printer.printNicely("Too Bad! The AI won!\n\nAI: " + ai.getVictoryMessage());
             gameEnded = true;

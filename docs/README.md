@@ -4,6 +4,9 @@ Welcome to Duchess! Duchess is a desktop app for managing lists and tasks. The c
 
 ![Screenshot showing the opening screen of Duchess](screenshot.png)
 
+### A note on running
+Duchess can run on any terminal, however Windows Terminal or any other terminal that supports ANSI escape codes is recommended for the best experience.
+
 ## Creating a List
 The list command lets you create multiple lists\
 `list {name}`\

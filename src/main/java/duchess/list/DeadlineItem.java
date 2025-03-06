@@ -1,7 +1,6 @@
 package duchess.list;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -9,15 +8,17 @@ import java.time.format.DateTimeFormatter;
  */
 public class DeadlineItem extends ListItem {
 
-    /** The deadline associated with the item. */
+    /** The deadline as a string in "dd-MM-yyyy" format. */
     private String deadline;
+
+    /** The parsed deadline date, or null if parsing fails. */
     private LocalDate deadlineDate;
 
     /**
      * Constructs a DeadlineItem with a name and deadline.
      *
      * @param itemName The name of the item.
-     * @param deadline The deadline for the item.
+     * @param deadline The deadline for the item, in "dd-MM-yyyy" format.
      */
     public DeadlineItem(String itemName, String deadline) {
         super(itemName);
@@ -25,7 +26,7 @@ public class DeadlineItem extends ListItem {
         try {
             this.deadlineDate = LocalDate.parse(deadline, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
         } catch (Exception e) {
-            this.deadlineDate = null;
+            this.deadlineDate = null; // Fallback if the date cannot be parsed
         }
     }
 
@@ -34,12 +35,11 @@ public class DeadlineItem extends ListItem {
      * name, deadline, and ticked status.
      *
      * @param whiteSpaceCount The number of spaces to add after the item information.
-     * @param i The index of the item in the list (used for numbering).
+     * @param i The index of the item in the list (used for numbering, 0-based).
      * @return A formatted string representing the item.
      */
     @Override
     public String getListedStringRepresentation(int whiteSpaceCount, int i) {
-        // Using explicit parentheses to make the grouping clear
         return (i + 1) + ". [Deadline] " + itemName + " (by "
                 + (deadlineDate != null ? deadlineDate.format(DateTimeFormatter.ofPattern("dd-MMMM-yyyy")) : deadline)
                 + ")" + " ".repeat(whiteSpaceCount)
@@ -48,12 +48,12 @@ public class DeadlineItem extends ListItem {
 
     /**
      * Calculates the length of the string representation of this item.
+     * The length includes the fixed prefix, the item name, and the deadline string.
      *
-     * @return The length of the string representation of this item.
+     * @return The total length of the string representation.
      */
     @Override
     public int getLengthOfString() {
-        // Avoid magic numbers by explaining the constant length (17 is a fixed prefix length)
         return 17 + itemName.length() + deadline.length();
     }
 }

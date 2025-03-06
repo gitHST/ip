@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class represents a list of items and provides methods to add items, retrieve them,
- * and generate a string representation of the list.
+ * Represents a list of items and provides methods to add items, retrieve them,
+ * and generate a formatted string representation of the list.
  */
 public class ItemsList {
 
     private final List<ListItem> items;
 
     /**
-     * Constructs an empty ItemsList.
+     * Constructs an empty {@code ItemsList}.
      */
     public ItemsList() {
         this.items = new ArrayList<>();
@@ -21,7 +21,7 @@ public class ItemsList {
     /**
      * Adds a new item to the list.
      *
-     * @param item The item to add to the list.
+     * @param item the item to add to the list
      */
     public void addItem(ListItem item) {
         items.add(item);
@@ -30,17 +30,18 @@ public class ItemsList {
     /**
      * Retrieves all items in the list.
      *
-     * @return A list of all items.
+     * @return a list containing all items in this {@code ItemsList}
      */
     public List<ListItem> getItems() {
         return items;
     }
 
     /**
-     * Returns a string representation of the list. If the list is empty, it returns a message
-     * indicating the list is empty. Otherwise, it formats the list items for display.
+     * Returns a formatted string representation of the list. If the list is empty,
+     * it returns a message indicating that the list is empty. Otherwise, it formats
+     * the list items for display, aligning them based on the longest item's length.
      *
-     * @return A string representation of the list's contents.
+     * @return a string representation of the list's contents
      */
     @Override
     public String toString() {

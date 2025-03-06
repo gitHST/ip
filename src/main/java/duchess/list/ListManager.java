@@ -61,8 +61,27 @@ public class ListManager {
             case "tick" -> toggleItem(listName, itemName, true);
             case "untick" -> toggleItem(listName, itemName, false);
             case "delete" -> deleteItemFromList(listName, itemName);
+            case "find" -> findItemByName(listName, itemName);
             default -> "I'm afraid I don't understand that action, darling.";
         };
+    }
+
+    private String findItemByName(String listName, String itemName) {
+        if (!lists.containsKey(listName)) {
+            return "I’m afraid I have no list under that name, darling.";
+        }
+
+        ItemsList list = lists.get(listName);
+        List<String> foundItems = new ArrayList<>();
+        for (ListItem item : list.getItems()) {
+            if (item.toString().contains(itemName)) {
+                foundItems.add(item.toString());
+            }
+        }
+        if (foundItems.isEmpty()) {
+            return "I’m afraid I have no item by that name in list '" + listName + "', darling.";
+        }
+        return "Found items in list '" + listName + "': " + String.join(", ", foundItems) + ".";
     }
 
     private String deleteItemFromList(String listName, String itemName) {

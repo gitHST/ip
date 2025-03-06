@@ -27,7 +27,7 @@ public class Duchess {
                 list {name} {item} delete: Remove an item from an existing list
                 list {name} {item} tick: Tick an item in an existing list
                 list {name} {item} untick: Untick an item in an existing list
-                list {name} todo: Add a todo item
+                list {name} todo {item}: Add a todo item
                 list {name} deadline {item} by {deadline}: Add a deadline item
                 list {name} event {item} from {from} to {to}: Add an event item
             """;

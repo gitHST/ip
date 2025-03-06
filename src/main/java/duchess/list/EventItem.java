@@ -1,5 +1,8 @@
 package duchess.list;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 /**
  * Represents an event item in the list, extending the ListItem class.
  * Contains information about the event's name, start time, and end time.
@@ -12,6 +15,10 @@ public class EventItem extends ListItem {
     /** The end time of the event */
     private String to;
 
+    /** Parsed start and end dates, if applicable */
+    private LocalDate fromDate;
+    private LocalDate toDate;
+
     /**
      * Constructs an EventItem with the specified name, start time, and end time.
      *
@@ -23,6 +30,18 @@ public class EventItem extends ListItem {
         super(itemName);
         this.from = from;
         this.to = to;
+
+        try {
+            this.fromDate = LocalDate.parse(from, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        } catch (Exception e) {
+            this.fromDate = null;
+        }
+
+        try {
+            this.toDate = LocalDate.parse(to, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        } catch (Exception e) {
+            this.toDate = null;
+        }
     }
 
     /**
@@ -35,16 +54,18 @@ public class EventItem extends ListItem {
      */
     @Override
     public String getListedStringRepresentation(int whiteSpaceCount, int i) {
-        // Using String.format() for better readability and to avoid deep concatenation
+        // Format dates if they were successfully parsed, otherwise use original strings
+        String formattedFrom = (fromDate != null) ? fromDate.format(DateTimeFormatter.ofPattern("dd-MMMM-yyyy")) : from;
+        String formattedTo = (toDate != null) ? toDate.format(DateTimeFormatter.ofPattern("dd-MMMM-yyyy")) : to;
+
         return String.format("%d. [Event] %s (from %s to %s)%s %s%n",
                 i + 1,
                 itemName,
-                from,
-                to,
+                formattedFrom,
+                formattedTo,
                 " ".repeat(whiteSpaceCount),
                 (ticked ? "[x]" : "[ ]"));
     }
-
 
     /**
      * Returns the length of the string representation of this event item.

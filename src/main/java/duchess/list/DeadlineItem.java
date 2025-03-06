@@ -1,5 +1,9 @@
 package duchess.list;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 /**
  * Represents a list item with a deadline, extending the base ListItem class.
  */
@@ -7,6 +11,7 @@ public class DeadlineItem extends ListItem {
 
     /** The deadline associated with the item. */
     private String deadline;
+    private LocalDate deadlineDate;
 
     /**
      * Constructs a DeadlineItem with a name and deadline.
@@ -17,6 +22,11 @@ public class DeadlineItem extends ListItem {
     public DeadlineItem(String itemName, String deadline) {
         super(itemName);
         this.deadline = deadline;
+        try {
+            this.deadlineDate = LocalDate.parse(deadline, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        } catch (Exception e) {
+            this.deadlineDate = null;
+        }
     }
 
     /**
@@ -30,8 +40,9 @@ public class DeadlineItem extends ListItem {
     @Override
     public String getListedStringRepresentation(int whiteSpaceCount, int i) {
         // Using explicit parentheses to make the grouping clear
-        return (i + 1) + ". [Deadline] " + itemName + " (by " + deadline + ")"
-                + " ".repeat(whiteSpaceCount)
+        return (i + 1) + ". [Deadline] " + itemName + " (by "
+                + (deadlineDate != null ? deadlineDate.format(DateTimeFormatter.ofPattern("dd-MMMM-yyyy")) : deadline)
+                + ")" + " ".repeat(whiteSpaceCount)
                 + " " + (ticked ? "[x]" : "[ ]") + "\n";
     }
 
